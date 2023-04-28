@@ -15,7 +15,15 @@ bool print_file(std::string file_path) {
 	}
 	return false;
 }
-
+bool clear_file(std::string file_path) {
+	std::ofstream clear;
+	clear.open(file_path);
+	if (clear.is_open()) {
+		clear.close();
+		return true;
+	}
+	return false;
+}
 bool statistic(std::string word);
 
 
@@ -93,18 +101,46 @@ int main() {
 	// 3. Файл не существует;
 	// 4. Файл открыт.
 	*/
-	// TAsk 1
-	std::cout << " Задача 1. \nВведите слова -> ";
-	std::string str1;
-	std::getline(std::cin, str1);
-	if (statistic(str1)) {
-		std::cout << "Запись добавлена в файл.\n\n";
-		std::cout << "Содержимое файла: \n";
-		print_file("stats.txt");
-	}
-	else
-		std::cout << "Ошибка выполнения функции. \n\n";
+	// TAsk 1, 2
+	std::cout << " Задача 1. \n";
+	int action;
+	do {
+		std::cout << "Выберете действие:\n";
+		std::cout << "1. Добавление статистики в файл;\n";
+		std::cout << "2. Вывод файла;\n";
+		std::cout << "3. Очистка файла;\n";
+		std::cout << "4. Завершение работы. \n";
+		std::cout << "Введите номер команды -> ";
+		std::cin >> action;
+		std::string str1;
+		switch (action) {
+		case 1:
+			std::cout << "Введите строку -> ";
+			std::cin.ignore();
+			std::getline(std::cin, str1);
+			if (statistic(str1)) 
+				std::cout << "Запись добавлена в файл.\n\n";
+			else
+				std::cout << "Ошибка выполнения функции. \n\n";
+			break;
+		case 2:
+			std::cout << "Содержимое файла: \n";
+			print_file("stats.txt");
+			break;
+		case 3:
+			clear_file("stats.txt");
+			std::cout << "Файл очищен.\n\n";
+			break;
+		case 4:
+			std::cout << "Программа Завершена!\n\n";
+			break;
+		default:
+			std::cout << "Ошибка ввода!\n\n";
+		}
 
+		
+	} while (action != 4);
+	
 
 
 
